@@ -37,9 +37,7 @@ class TestHelper implements PackageProvider {
   final StringFormatter formatter;
 
   Future<Asset> getAsset(AssetId id) async {
-    print('reading $id');
     if (!files.containsKey(idToString(id))) {
-      print('failed $id');
       throw new AssetNotFoundException(id);
     }
     return new Asset.fromString(id, files[idToString(id)]);
