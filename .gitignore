@@ -1,0 +1,12 @@
+# Don’t commit the following directories created by pub.
+.pub
+/build/
+packages
+.packages
+
+.idea/
+*.iml
+
+# Include when developing application packages.
+pubspec.lock
+.analysis_options
