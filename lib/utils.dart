@@ -21,13 +21,21 @@ export 'src/test_harness.dart' show StringFormatter;
 /// Defines a test which invokes [applyTransformers].
 testPhases(String testName, List<List<Transformer>> phases,
     Map<String, String> inputs, Map<String, String> results,
-    [List<String> messages,
-    StringFormatter formatter = StringFormatter.noTrailingWhitespace]) {
-  test(testName, () => applyTransformers(phases,
-      inputs: inputs,
-      results: results,
-      messages: messages,
-      formatter: formatter));
+    {List messages: const [],
+    StringFormatter formatter: StringFormatter.noTrailingWhitespace,
+    skip,
+    tags,
+    bool expectBarbackErrors: false}) {
+  test(
+      testName,
+      () => applyTransformers(phases,
+          inputs: inputs,
+          results: results,
+          messages: messages,
+          formatter: formatter,
+          expectBarbackErrors: expectBarbackErrors),
+      skip: skip,
+      tags: tags);
 }
 
 /// Updates the provided transformers with [inputs] as asset inputs then
@@ -39,11 +47,13 @@ testPhases(String testName, List<List<Transformer>> phases,
 /// If [messages] is non-null then this will validate that only the specified
 /// messages were generated, ignoring info messages.
 Future applyTransformers(List<List<Transformer>> phases,
-    {Map<String, String> inputs: const {}, Map<String, String> results: const {
-}, List<String> messages: const [],
-    StringFormatter formatter: StringFormatter.noTrailingWhitespace}) {
-  var helper = new TestHelper(phases, inputs, messages, formatter: formatter)
-    ..run();
+    {Map<String, String> inputs: const {},
+    Map<String, String> results: const {},
+    List messages: const [],
+    StringFormatter formatter: StringFormatter.noTrailingWhitespace,
+    bool expectBarbackErrors: false}) {
+  var helper = new TestHelper(phases, inputs, messages,
+      formatter: formatter, expectBarbackErrors: expectBarbackErrors)..run();
   return helper.checkAll(results).then((_) => helper.tearDown());
 }
 

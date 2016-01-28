@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- Changed all optional arguments to `testPhases` to named arguments.
+- Added `skip` and `tags` named arguments to `testPhases`, which will be
+  forwarded on to the call to `test`.
+- `messages` optional argument to `testPhases` now accepts either `Matcher`s or
+  `String`s.
+- Added `expectBarbackErrors` optional argument to `testPhases`.
+
 ## 0.1.0
 
 - Initial version

@@ -1,5 +1,5 @@
 name: transformer_test
-version: 0.1.0
+version: 0.2.0
 description: A library which helps with writing tests for transformers.
 author: Dart Team <misc@dartlang.org>
 homepage: https://github.com/dart-lang/transformer_test

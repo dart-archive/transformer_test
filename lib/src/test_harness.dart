@@ -20,12 +20,12 @@ AssetId idFromString(String s) {
 /// A helper package provider that has files stored in memory, also wraps
 /// [Barback] to simply our tests.
 class TestHelper implements PackageProvider {
-
   /// Maps from an asset string identifier of the form 'package|path' to the
   /// file contents.
   final Map<String, String> files;
   final Iterable<String> packages;
-  final List<String> messages;
+  final List<dynamic> messages;
+  final bool expectBarbackErrors;
   int messagesSeen = 0;
   bool errorSeen = false;
 
@@ -44,7 +44,9 @@ class TestHelper implements PackageProvider {
   }
 
   TestHelper(List<List<Transformer>> transformers, Map<String, String> files,
-      this.messages, {this.formatter: StringFormatter.noTrailingWhitespace})
+      this.messages,
+      {this.formatter: StringFormatter.noTrailingWhitespace,
+      this.expectBarbackErrors: false})
       : files = files,
         packages = files.keys.map((s) => idFromString(s).package) {
     barback = new Barback(this);
@@ -53,6 +55,7 @@ class TestHelper implements PackageProvider {
     }
 
     errorSubscription = barback.errors.listen((e) {
+      if (expectBarbackErrors) return;
       var trace = null;
       if (e is Error) trace = e.stackTrace;
       if (trace != null) {
@@ -62,7 +65,11 @@ class TestHelper implements PackageProvider {
     });
 
     resultSubscription = barback.results.listen((result) {
-      expect(result.succeeded, !errorSeen, reason: "${result.errors}");
+      if (expectBarbackErrors) {
+        expect(result.succeeded, isFalse);
+      } else {
+        expect(result.succeeded, !errorSeen, reason: "${result.errors}");
+      }
     });
 
     logSubscription = barback.log.listen((entry) {
@@ -124,8 +131,8 @@ class TestHelper implements PackageProvider {
     }).then((_) {
       // We only check messages when an expectation is provided.
       if (messages == null) return;
-      expect(
-          messagesSeen, messages.length, reason: 'less messages than expected');
+      expect(messagesSeen, messages.length,
+          reason: 'less messages than expected');
     });
   }
 }
@@ -153,8 +160,10 @@ class StringFormatter {
       stripTrailingWhitespace: true,
       stripNewlines: true);
 
-  const StringFormatter({this.stripLeadingWhitespace: false,
-      this.stripTrailingWhitespace: false, this.stripNewlines: false});
+  const StringFormatter(
+      {this.stripLeadingWhitespace: false,
+      this.stripTrailingWhitespace: false,
+      this.stripNewlines: false});
 
   String formatString(String str) {
     if (stripLeadingWhitespace) str = _removeLeadingWhitespace(str);
