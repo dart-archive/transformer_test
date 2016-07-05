@@ -19,7 +19,7 @@ import 'src/test_harness.dart';
 export 'src/test_harness.dart' show StringFormatter;
 
 /// Defines a test which invokes [applyTransformers].
-testPhases(String testName, List<List<Transformer>> phases,
+testPhases(String testName, List<List> phases,
     Map<String, String> inputs, Map<String, String> results,
     {List messages: const [],
     StringFormatter formatter: StringFormatter.noTrailingWhitespace,
@@ -46,7 +46,7 @@ testPhases(String testName, List<List<Transformer>> phases,
 ///
 /// If [messages] is non-null then this will validate that only the specified
 /// messages were generated, ignoring info messages.
-Future applyTransformers(List<List<Transformer>> phases,
+Future applyTransformers(List<List> phases,
     {Map<String, String> inputs: const {},
     Map<String, String> results: const {},
     List messages: const [],

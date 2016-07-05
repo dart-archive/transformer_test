@@ -43,7 +43,7 @@ class TestHelper implements PackageProvider {
     return new Asset.fromString(id, files[idToString(id)]);
   }
 
-  TestHelper(List<List<Transformer>> transformers, Map<String, String> files,
+  TestHelper(List<List> transformers, Map<String, String> files,
       this.messages,
       {this.formatter: StringFormatter.noTrailingWhitespace,
       this.expectBarbackErrors: false})
