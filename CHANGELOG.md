@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1
+
+- Widened type of `phases` parameter of `testPhases` function, which allows
+  to use it to test aggregate transformers and transformer groups.
+
 ## 0.2.0
 
 - Changed all optional arguments to `testPhases` to named arguments.
