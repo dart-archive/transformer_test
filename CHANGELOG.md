@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2
+
+- Bump maximum version allowed for code_transformers. The breaking change in
+  version 0.5.0 has no impact here.
+
 ## 0.2.1
 
 - Widened type of `phases` parameter of `testPhases` function, which allows
