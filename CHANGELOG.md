@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.2
+## 0.2.1+1
 
 - Bump maximum version allowed for code_transformers. The breaking change in
   version 0.5.0 has no impact here.
