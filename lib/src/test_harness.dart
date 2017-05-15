@@ -56,7 +56,7 @@ class TestHelper implements PackageProvider {
 
     errorSubscription = barback.errors.listen((e) {
       if (expectBarbackErrors) return;
-      var trace = null;
+      StackTrace trace;
       if (e is Error) trace = e.stackTrace;
       if (trace != null) {
         print(Trace.format(trace));
@@ -123,7 +123,7 @@ class TestHelper implements PackageProvider {
   Future checkAll(Map<String, String> files) {
     return barback.results.first.then((_) {
       if (files == null) return null;
-      var futures = [];
+      var futures = <Future>[];
       files.forEach((k, v) {
         futures.add(check(k, v));
       });
