@@ -9,7 +9,6 @@ library transformer_test;
 import 'dart:async' show Future;
 import 'dart:io' show Platform;
 
-import 'package:barback/barback.dart' show Transformer;
 import 'package:code_transformers/resolver.dart';
 import 'package:path/path.dart' as path;
 import 'package:test/test.dart';

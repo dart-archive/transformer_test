@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1+2
+
+- Fix strong mode errors.
+- Add missing dependency on package:stack_trace.
+
 ## 0.2.1+1
 
 - Bump maximum version allowed for code_transformers. The breaking change in
